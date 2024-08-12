@@ -36,7 +36,7 @@ passport.use(
     new OAuth2({
         clientID: clientid,
         clientSecret: clientsecret,
-        callbackURL: `${process.env.REACT_APP_BACKEND_URL}/auth/google/callback`,
+        callbackURL: `https://recipefinderappbackend.onrender.com/auth/google/callback`,
         scope: ["profile","email"]
     },
         async (accessToken, refreshToken, profile, done) => {
