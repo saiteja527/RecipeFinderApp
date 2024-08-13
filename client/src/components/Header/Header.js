@@ -16,11 +16,16 @@ const Header = () => {
   const getUser = async () => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/login/success`, { withCredentials: true });
-      setUserData(response.data.user);
+      if (response.status === 200 && response.data.success) {
+        setUserData(response.data.user);
+      } else {
+        console.error("User is not authenticated.");
+      }
     } catch (err) {
       console.error("Error fetching user data", err);
     }
-  };
+};
+
 
   const logOut = async () => {
     window.open(`${process.env.REACT_APP_BACKEND_URL}/logout`, "_self");
