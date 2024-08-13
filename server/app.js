@@ -24,11 +24,12 @@ app.use(express.json());
 
 //session setup
 app.use(session({
-    secret: "secretcode",
+    secret: "securitycode",
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true } 
+    cookie: { secure: process.env.NODE_ENV === 'production' }  
 }));
+
 
 
 //passport setup
