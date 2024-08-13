@@ -8,7 +8,7 @@ const ProtectedRoute = ({ element: Component, ...rest }) => {
 
   const checkAuth = async () => {
   try {
-    const response = await axios.get(`https://recipefinderappbackend.onrender.com/login/success`, { withCredentials: true });
+    const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/login/success`, { withCredentials: true });
     if (response.status === 200 && response.data.user) {
       setIsAuthenticated(true);
     } else {
