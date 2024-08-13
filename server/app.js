@@ -27,7 +27,7 @@ app.use(session({
     secret: "secretcode",
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false, httpsOnly: true } 
+    cookie: { secure: true } 
 }));
 
 
