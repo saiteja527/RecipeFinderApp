@@ -16,8 +16,8 @@ function App() {
       <Header />
       <Banner />
       <Routes>
-        <Route path='/' element={<ProtectedRoute element={Home} setItems={setItems} />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/' element={<ProtectedRoute element={Home} setItems={setItems} />} />
         <Route path='/error' element={<Error />} />
         <Route path='*' element={<Error />} />
       </Routes>
