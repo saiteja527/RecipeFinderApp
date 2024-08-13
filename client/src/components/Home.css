@@ -211,5 +211,8 @@
   font-size: 13px;
   padding: 8px 15px;
 }
+.no-results-image {
+  max-width: 70%;
+}
 }
 
