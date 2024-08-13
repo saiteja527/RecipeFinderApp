@@ -8,25 +8,28 @@ const passport = require("passport")
 const session = require("express-session");
 const OAuth2 = require("passport-google-oauth2").Strategy
 const userdb = require("./models/userSchema")
-
+const MongoStore = require('connect-mongo');
 const clientid = process.env.GOOGLE_CLIENT_ID;
 const clientsecret = process.env.GOOGLE_CLIENT_SECRET;
 
 //cors middleware
 app.use(cors({
-    origin: `${process.env.REACT_APP_FRONTEND_URL}`,
+    origin: process.env.REACT_APP_FRONTEND_URL,
     methods: "GET,POST,PUT,DELETE",
-    credentials:true
+    credentials: true
 }));
+
 
 app.use(express.json());
 
 //session setup
 app.use(session({
-    secret: "secretcode",
-    resave: false,
-    saveUninitialized: true
-}))
+  secret: 'secretcode',
+  resave: false,
+  saveUninitialized: true,
+  store: MongoStore.create({ mongoUrl: process.env.DATABASE })
+}));
+
 
 //passport setup
 app.use(passport.initialize())
@@ -82,13 +85,15 @@ app.get("/auth/google/callback", passport.authenticate("google", {
     failureRedirect: `${process.env.REACT_APP_FRONTEND_URL}/login`
 }))
 
-app.get("/login/success", (req, res) => {
-    if (req.user) {
-        res.status(200).json({ success: true, message: "User logged in successfully", user: req.user });
-    } else {
-        res.status(400).json({ success: false, message: "Not Authorized User" });
-    }
+app.get('/login/success', (req, res) => {
+  console.log("User in session:", req.user);
+  if (req.user) {
+    res.status(200).json({ success: true, message: "User logged in successfully", user: req.user });
+  } else {
+    res.status(400).json({ success: false, message: "Not Authorized User" });
+  }
 });
+
 
 // Logout route in your server
 app.get('/logout', (req, res) => {
