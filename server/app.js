@@ -24,10 +24,11 @@ app.use(express.json());
 
 //session setup
 app.use(session({
-    secret: "securitycode",
+    secret: "secretcode",
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: process.env.NODE_ENV === 'production' }  
+    store: MongoStore.create({ mongoUrl: process.env.DATABASE }),
+    cookie: { secure: process.env.NODE_ENV === 'production' } 
 }));
 
 
