@@ -7,13 +7,18 @@ const ProtectedRoute = ({ element: Component, ...rest }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
 
   const checkAuth = async () => {
-    try {
-      const response = await axios.get(`https://recipefinderappbackend.onrender.com/login/success`, { withCredentials: true });
-      setIsAuthenticated(!!response.data.user);
-    } catch (err) {
+  try {
+    const response = await axios.get(`https://recipefinderappbackend.onrender.com/login/success`, { withCredentials: true });
+    if (response.status === 200 && response.data.user) {
+      setIsAuthenticated(true);
+    } else {
       setIsAuthenticated(false);
     }
-  };
+  } catch (err) {
+    console.error("Error during authentication check:", err);
+    setIsAuthenticated(false);  
+  }
+};
 
   useEffect(() => {
     checkAuth();
