@@ -24,10 +24,10 @@ app.use(express.json());
 
 //session setup
 app.use(session({
-  secret: 'secretcode',
-  resave: false,
-  saveUninitialized: true,
-  store: MongoStore.create({ mongoUrl: process.env.DATABASE })
+    secret: "secretcode",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false, httpOnly: true } 
 }));
 
 
@@ -68,6 +68,7 @@ passport.use(
 passport.serializeUser((user, done) => {
     done(null, user.id);
 });
+
 passport.deserializeUser(async (id, done) => {
     try {
         const user = await userdb.findById(id);
