@@ -15,7 +15,7 @@ const Header = () => {
 
   const getUser = async () => {
     try {
-      const response = await axios.get(`https://recipefinderappbackend.onrender.com/login/success`, { withCredentials: true });
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/login/success`, { withCredentials: true });
       setUserData(response.data.user);
     } catch (err) {
       console.error("Error fetching user data", err);
@@ -23,7 +23,7 @@ const Header = () => {
   };
 
   const logOut = async () => {
-    window.open(`https://recipefinderappbackend.onrender.com/logout`, "_self");
+    window.open(`${process.env.REACT_APP_BACKEND_URL}/logout`, "_self");
   }
 
   const toggleNav = () => {

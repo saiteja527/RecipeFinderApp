@@ -4,7 +4,7 @@ import logo from '../../assets/login-image.jpg';
 
 const Login = () => {
   const LoginWithGoogle = () => {
-    window.open(`https://recipefinderappbackend.onrender.com/auth/google/callback`, "_self");
+    window.open(`${process.env.REACT_APP_BACKEND_URL}/auth/google/callback`, "_self");
   }
 
   return (

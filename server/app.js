@@ -14,7 +14,7 @@ const clientsecret = process.env.GOOGLE_CLIENT_SECRET;
 
 //cors middleware
 app.use(cors({
-    origin: `https://recipefinderappfrontend.onrender.com`,
+    origin: `${process.env.REACT_APP_FRONTEND_URL}`,
     methods: "GET,POST,PUT,DELETE",
     credentials:true
 }));
@@ -36,7 +36,7 @@ passport.use(
     new OAuth2({
         clientID: clientid,
         clientSecret: clientsecret,
-        callbackURL: `https://recipefinderappbackend.onrender.com/auth/google/callback`,
+        callbackURL: `${process.env.REACT_APP_BACKEND_URL}/auth/google/callback`,
         scope: ["profile","email"]
     },
         async (accessToken, refreshToken, profile, done) => {
@@ -78,8 +78,8 @@ passport.deserializeUser(async (id, done) => {
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }))
 
 app.get("/auth/google/callback", passport.authenticate("google", {
-    successRedirect: `https://recipefinderappfrontend.onrender.com/`,
-    failureRedirect: `https://recipefinderappfrontend.onrender.com/login`
+    successRedirect: `${process.env.REACT_APP_FRONTEND_URL}/`,
+    failureRedirect: `${process.env.REACT_APP_FRONTEND_URL}/login`
 }))
 
 app.get("/login/success", (req, res) => {
@@ -94,7 +94,7 @@ app.get("/login/success", (req, res) => {
 app.get('/logout', (req, res) => {
   req.logout((err) => {
     if (err) return next(err);
-    res.redirect(`https://recipefinderappfrontend.onrender.com/login`);
+    res.redirect(`${process.env.REACT_APP_FRONTEND_URL}/login`);
   });
 });
 
